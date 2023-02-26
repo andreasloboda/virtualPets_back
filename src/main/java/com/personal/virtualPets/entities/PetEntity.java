@@ -28,7 +28,7 @@ public class PetEntity {
 	private ProfileEntity owner;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "specie")
+	@JoinColumn(name = "species")
 	private SpeciesEntity species;
 	public PetEntity() {
 		super();

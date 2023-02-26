@@ -24,7 +24,7 @@ public class SpeciesEntity {
 	@Column(nullable = false, unique = true)
 	private String species;
 	
-	@OneToMany (fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "specie")
+	@OneToMany (fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "species")
 	private List<PetEntity> pets;
 
 	public SpeciesEntity() {

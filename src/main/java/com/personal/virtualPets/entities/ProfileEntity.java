@@ -7,27 +7,26 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Version;
 
 @Entity
 public class ProfileEntity {
 
 	@Id
-	@Column(name = "userId")
+	@PrimaryKeyJoinColumn(name = "userId")
 	private Integer id;
 	@Version
 	private Integer version;
 	@Column(nullable = false)
 	private String nickname;
 	
-	@Column(nullable = false)
 	@OneToOne
 	@MapsId
-	@JoinColumn(name = "userId")
+	@PrimaryKeyJoinColumn(name = "userId")
 	private UserEntity user;
 	
 	@OneToMany (fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "owner")
