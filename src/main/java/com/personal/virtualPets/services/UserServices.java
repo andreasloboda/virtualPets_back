@@ -3,12 +3,12 @@ package com.personal.virtualPets.services;
 import org.springframework.http.ResponseEntity;
 
 import com.personal.virtualPets.dtos.PasswordDTO;
-import com.personal.virtualPets.dtos.UserNewDTO;
+import com.personal.virtualPets.dtos.UserRequestDTO;
 import com.personal.virtualPets.enums.UserRole;
 
 public interface UserServices {
 
-	ResponseEntity<?> newUser(UserNewDTO data, UserRole role);
+	ResponseEntity<?> newUser(UserRequestDTO data, UserRole role);
 
 	ResponseEntity<?> getUserById(Integer id);
 
@@ -20,7 +20,7 @@ public interface UserServices {
 
 	ResponseEntity<?> deleteUser(Integer id);
 
-	ResponseEntity<?> editUser(Integer id, UserNewDTO data);
+	ResponseEntity<?> editUser(Integer id, UserRequestDTO data);
 
 	ResponseEntity<?> verify(Integer id, String ver);
 

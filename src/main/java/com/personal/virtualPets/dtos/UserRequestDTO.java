@@ -1,6 +1,6 @@
 package com.personal.virtualPets.dtos;
 
-public class UserNewDTO {
+public class UserRequestDTO {
 
 	private String username;
 	private String email;
@@ -8,11 +8,11 @@ public class UserNewDTO {
 	//TODO change to more secure method
 	private String password;
 
-	public UserNewDTO() {
+	public UserRequestDTO() {
 		super();
 	}
 
-	public UserNewDTO(String username, String email, String password) {
+	public UserRequestDTO(String username, String email, String password) {
 		super();
 		this.username = username;
 		this.email = email;

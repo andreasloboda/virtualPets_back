@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.personal.virtualPets.dtos.PasswordDTO;
-import com.personal.virtualPets.dtos.UserNewDTO;
+import com.personal.virtualPets.dtos.UserRequestDTO;
 import com.personal.virtualPets.dtos.UserResponseDTO;
 import com.personal.virtualPets.entities.UserEntity;
 import com.personal.virtualPets.enums.UserRole;
@@ -25,8 +25,8 @@ public class UserServicesImp implements UserServices{
 	
 	//TODO Add Randomization for verification
 	@Override
-	public ResponseEntity<?> newUser(UserNewDTO data, UserRole role) {
-		if (data.getEmail().isBlank() || data.getPassword().isBlank() || data.getUsername().isBlank())
+	public ResponseEntity<?> newUser(UserRequestDTO data, UserRole role) {
+		if (data.getEmail().isEmpty() || data.getPassword().isEmpty() || data.getUsername().isEmpty())
 			return new ResponseEntity<> ("Data incomplete", HttpStatus.BAD_REQUEST);
 		UserEntity user = new UserEntity();
 		user.setEmail(data.getEmail());
@@ -97,7 +97,7 @@ public class UserServicesImp implements UserServices{
 	}
 
 	@Override
-	public ResponseEntity<?> editUser(Integer id, UserNewDTO data) {
+	public ResponseEntity<?> editUser(Integer id, UserRequestDTO data) {
 		if (id == null )
 			return new ResponseEntity<> ("Bad Request", HttpStatus.BAD_REQUEST);
 		if (userRepo.existsById(id)) {

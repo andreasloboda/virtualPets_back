@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.personal.virtualPets.dtos.PasswordDTO;
-import com.personal.virtualPets.dtos.UserNewDTO;
+import com.personal.virtualPets.dtos.UserRequestDTO;
 import com.personal.virtualPets.enums.UserRole;
 import com.personal.virtualPets.services.UserServices;
 
@@ -25,11 +25,11 @@ public class UserController {
 	private UserServices userServ;
 	
 	@PostMapping("/user")
-	public ResponseEntity<?> createUser(@RequestBody UserNewDTO data){
+	public ResponseEntity<?> createUser(@RequestBody UserRequestDTO data){
 		return userServ.newUser(data, UserRole.ROLE_VERIFY);
 	}
 	@PostMapping("/admin")
-	public ResponseEntity<?> createAdmin(@RequestBody UserNewDTO data){
+	public ResponseEntity<?> createAdmin(@RequestBody UserRequestDTO data){
 		return userServ.newUser(data, UserRole.ROLE_ADMIN);
 	}
 
@@ -53,7 +53,7 @@ public class UserController {
 
 	//TODO edit user
 	@PutMapping("/user/{id}")
-	public ResponseEntity<?> changeUser(@PathVariable Integer id, @RequestBody UserNewDTO data){
+	public ResponseEntity<?> changeUser(@PathVariable Integer id, @RequestBody UserRequestDTO data){
 		return userServ.editUser(id, data);
 	}
 	@PutMapping("/user/{id}/verify")
