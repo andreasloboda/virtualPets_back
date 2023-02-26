@@ -1,61 +1,73 @@
 package com.personal.virtualPets.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.personal.virtualPets.dtos.PasswordDTO;
+import com.personal.virtualPets.dtos.UserNewDTO;
+import com.personal.virtualPets.enums.UserRole;
 import com.personal.virtualPets.services.UserServices;
 
 @RestController
+@RequestMapping("/api/v1")
 public class UserController {
 
 	@Autowired
 	private UserServices userServ;
 	
-	//TODO Create new user
-	public ResponseEntity<?> createUser(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
+	@PostMapping("/user")
+	public ResponseEntity<?> createUser(@RequestBody UserNewDTO data){
+		return userServ.newUser(data, UserRole.ROLE_VERIFY);
 	}
-	
-	public ResponseEntity<?> createAdmin(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
+	@PostMapping("/admin")
+	public ResponseEntity<?> createAdmin(@RequestBody UserNewDTO data){
+		return userServ.newUser(data, UserRole.ROLE_ADMIN);
 	}
 
 	
-	//TODO Look up user
-	public ResponseEntity<?> getUserById(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
+	@GetMapping("/user/id/{id}")
+	public ResponseEntity<?> getUserById(@PathVariable Integer id){
+		return userServ.getUserById(id);
 	}
-	public ResponseEntity<?> getUserByUsername(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
+	@GetMapping("/user/name/{username}")
+	public ResponseEntity<?> getUserByUsername(@PathVariable String username){
+		return userServ.getUserByUsername(username);
 	}
-	public ResponseEntity<?> getUserByEmail(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
-	}
+	@GetMapping("/admin")
 	public ResponseEntity<?> getAdmins(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
+		return userServ.getAllAdmins();
 	}
-
+	@GetMapping("/user")
+	public ResponseEntity<?> getAllUsers(){
+		return userServ.getAllUsers();
+	}
 
 	//TODO edit user
-	public ResponseEntity<?> changeUser(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
+	@PutMapping("/user/{id}")
+	public ResponseEntity<?> changeUser(@PathVariable Integer id, @RequestBody UserNewDTO data){
+		return userServ.editUser(id, data);
 	}
-	public ResponseEntity<?> verifyUser(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
+	@PutMapping("/user/{id}/verify")
+	public ResponseEntity<?> verifyUser(@RequestParam String ver, @PathVariable Integer id){
+		return userServ.verify(id, ver);
 	}
-	public ResponseEntity<?> changePassword(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
-	}
-
-	//TODO delete user
-	public ResponseEntity<?> deleteUser(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
+	@PutMapping("/user/{id}/changepass")
+	public ResponseEntity<?> changePassword(@PathVariable Integer id, @RequestBody PasswordDTO pass){
+		return userServ.changePass(id, pass);
 	}
 
-	//TODO get all users
-	public ResponseEntity<?> getAllUsers(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
+	@DeleteMapping("/user/id/{id}")
+	public ResponseEntity<?> deleteUser(@PathVariable Integer id){
+		return userServ.deleteUser(id);
 	}
+
 }
