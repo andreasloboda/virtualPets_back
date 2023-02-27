@@ -51,7 +51,6 @@ public class UserController {
 		return userServ.getAllUsers();
 	}
 
-	//TODO edit user
 	@PutMapping("/user/{id}")
 	public ResponseEntity<?> changeUser(@PathVariable Integer id, @RequestBody UserRequestDTO data){
 		return userServ.editUser(id, data);

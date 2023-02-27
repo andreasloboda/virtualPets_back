@@ -1,46 +1,59 @@
 package com.personal.virtualPets.controllers;
 
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.personal.virtualPets.dtos.ProfileRequestDTO;
+import com.personal.virtualPets.services.ProfileServices;
+
 @RestController
+@RequestMapping("/api/v1")
 public class ProfileController {
 
-	//TODO create new profile
-	public ResponseEntity<?> createProfile(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
+	@Autowired
+	private ProfileServices profServ;
+	
+	@PostMapping("/user/{id}/profile")
+	public ResponseEntity<?> createProfile(@RequestBody ProfileRequestDTO data, @PathVariable Integer id){
+		return profServ.newProfile(id, data);
 	}
 
-	//TODO Look up profiles
-	public ResponseEntity<?> getById(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
+	@GetMapping("/profile/id/{id}")
+	public ResponseEntity<?> getById(@PathVariable Integer id){
+		return profServ.getProfileById(id);
 	}
-	public ResponseEntity<?> getByNickname(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
+	@GetMapping("/profile/nick/{name}")
+	public ResponseEntity<?> getByNickname(@PathVariable String name){
+		return profServ.getProfileByNickname(name);
 	}
-	public ResponseEntity<?> getOwnerOfPet(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
+	@GetMapping("/profile/pet/{id}")
+	public ResponseEntity<?> getOwnerOfPet(@PathVariable Integer id){
+		return profServ.getProfileByPet(id);
 	}
-	public ResponseEntity<?> getByEmail(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
+	@GetMapping("/profile/user/{name}")
+	public ResponseEntity<?> getByUsername(@PathVariable String name){
+		return profServ.getProfileByUsername(name);
 	}
-	public ResponseEntity<?> getByUsername(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
-	}
-	
-	//TODO get all profiles
+	@GetMapping("/profile/all")
 	public ResponseEntity<?> getAllProfiles(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
+		return profServ.getAllProfiles();
 	}
 	
-	//TODO change profile
-	public ResponseEntity<?> changeProfile(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
+	@PutMapping("/profile/id/{id}")
+	public ResponseEntity<?> changeProfile(@PathVariable Integer id, @RequestBody ProfileRequestDTO data){
+		return profServ.editProfile(id, data);
 	}
 	
-	//TODO delete profile
-	public ResponseEntity<?> deleteProfile(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
+	@DeleteMapping("/profile/id/{id}")
+	public ResponseEntity<?> deleteProfile(@PathVariable Integer id){
+		return profServ.deleteProfile(id);
 	}
 }
