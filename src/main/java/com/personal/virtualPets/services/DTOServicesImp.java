@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 
 import com.personal.virtualPets.dtos.PetsResponseDTO;
 import com.personal.virtualPets.dtos.ProfileResponseDTO;
+import com.personal.virtualPets.dtos.SpeciesResponseDTO;
 import com.personal.virtualPets.dtos.UserResponseDTO;
 import com.personal.virtualPets.entities.PetEntity;
 import com.personal.virtualPets.entities.ProfileEntity;
+import com.personal.virtualPets.entities.SpeciesEntity;
 import com.personal.virtualPets.entities.UserEntity;
 
 @Service
@@ -45,6 +47,14 @@ public class DTOServicesImp implements DTOServices{
 	@Override
 	public PetsResponseDTO petToDto(PetEntity i) {
 		return null;
+	}
+
+	@Override
+	public SpeciesResponseDTO SpeciesToDto(SpeciesEntity species) {
+		SpeciesResponseDTO dto = new SpeciesResponseDTO();
+		dto.setId(species.getId());
+		dto.setName(species.getName());
+		return dto;
 	}
 
 }

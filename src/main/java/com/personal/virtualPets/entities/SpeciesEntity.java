@@ -15,6 +15,11 @@ import jakarta.persistence.Version;
 @Entity
 public class SpeciesEntity {
 
+	//TODO expand so species can have alternate colors;
+	//then individual pets will be related to their color-species combination
+	//rather than just species. All pets created before that point will be
+	//appointed either random color or specific color for non-converted pets.
+	
 	@Id
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	@Column(name = "SpecieId")
@@ -22,7 +27,7 @@ public class SpeciesEntity {
 	@Version
 	private Integer version;
 	@Column(nullable = false, unique = true)
-	private String species;
+	private String name;
 	
 	@OneToMany (fetch = FetchType.LAZY, cascade = CascadeType.REFRESH, mappedBy = "species")
 	private List<PetEntity> pets;
@@ -31,11 +36,11 @@ public class SpeciesEntity {
 		super();
 	}
 
-	public SpeciesEntity(Integer id, Integer version, String species, List<PetEntity> pets) {
+	public SpeciesEntity(Integer id, Integer version, String name, List<PetEntity> pets) {
 		super();
 		this.id = id;
 		this.version = version;
-		this.species = species;
+		this.name = name;
 		this.pets = pets;
 	}
 
@@ -55,12 +60,12 @@ public class SpeciesEntity {
 		this.version = version;
 	}
 
-	public String getSpecies() {
-		return species;
+	public String getName() {
+		return name;
 	}
 
-	public void setSpecies(String species) {
-		this.species = species;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public List<PetEntity> getPets() {
