@@ -30,6 +30,7 @@ public class PetEntity {
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "species")
 	private SpeciesEntity species;
+	
 	public PetEntity() {
 		super();
 	}

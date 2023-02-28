@@ -1,41 +1,63 @@
 package com.personal.virtualPets.controllers;
 
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.personal.virtualPets.dtos.PetsRequestDto;
+import com.personal.virtualPets.services.PetServices;
+
 @RestController
+@RequestMapping("/api/v1/pet")
 public class PetsController {
 
-	//TODO create pet
-	public ResponseEntity<?> createPet(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
+	@Autowired
+	private PetServices petServ;
+	
+	@PostMapping("/")
+	public ResponseEntity<?> createPet(@RequestBody PetsRequestDto data){
+		return petServ.newPet(data);
 	}
 	
-	//TODO find pet
+	@GetMapping("/")
 	public ResponseEntity<?> getAllPets(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
+		return petServ.getAll();
 	}
-	public ResponseEntity<?> getPetById(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
+	@GetMapping("/id/{id}")
+	public ResponseEntity<?> getPetById(@PathVariable Integer id){
+		return petServ.getPetById(id);
 	}
-	public ResponseEntity<?> getPetByName(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
+	@GetMapping("/name/{name}")
+	public ResponseEntity<?> getPetByName(@PathVariable String name){
+		return petServ.getPetByName(name);
 	}
-	public ResponseEntity<?> getPetsOfSpecie(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
+	@GetMapping("/species/{id}")
+	public ResponseEntity<?> getPetsOfSpecie(@PathVariable Integer id){
+		return petServ.getPetsBySpecie(id);
 	}
-	public ResponseEntity<?> getPetsOfOwner(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
+	@GetMapping("/owner/{id}")
+	public ResponseEntity<?> getPetsOfOwner(@PathVariable Integer id){
+		return petServ.getPetsByOwner(id);
 	}
 	
-	//TODO delete pet
-	public ResponseEntity<?> deletePet(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
+	@DeleteMapping("/id/{id}")
+	public ResponseEntity<?> deletePet(@PathVariable Integer id){
+		return petServ.deletePet(id);
 	}
 	
-	//TODO alter pet
-	public ResponseEntity<?> changePet(){
-		return new ResponseEntity<> ("not implemented", HttpStatus.NOT_IMPLEMENTED);
+	@PutMapping("/id/{id}")
+	public ResponseEntity<?> changePet(@PathVariable Integer id, @RequestBody PetsRequestDto data){
+		return petServ.editPet(id, data);
+	}
+	@PutMapping("/disown/{id}")
+	public ResponseEntity<?> disownPet(@PathVariable Integer id){
+		return petServ.removeOwner(id);
 	}
 }

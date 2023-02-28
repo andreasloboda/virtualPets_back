@@ -43,10 +43,22 @@ public class DTOServicesImp implements DTOServices{
 		return dto;
 	}
 
-	//TODO EXPAND when detailing pets
 	@Override
-	public PetsResponseDTO petToDto(PetEntity i) {
-		return null;
+	public PetsResponseDTO petToDto(PetEntity pet) {
+		PetsResponseDTO dto = new PetsResponseDTO();
+		dto.setPetId(pet.getId());
+		dto.setPetName(pet.getName());
+		dto.setSpeciesId(pet.getSpecies().getId());
+		dto.setSpeciesName(pet.getSpecies().getName());
+		if (pet.getOwner().equals(null)) {
+			dto.setOwnerId(null);
+			dto.setOwnerName("adoptable");
+		}
+		else {
+			dto.setOwnerId(pet.getOwner().getId());
+			dto.setOwnerName(pet.getOwner().getNickname());
+		}
+		return dto;
 	}
 
 	@Override

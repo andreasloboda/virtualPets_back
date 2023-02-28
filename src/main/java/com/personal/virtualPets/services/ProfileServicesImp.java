@@ -25,9 +25,11 @@ public class ProfileServicesImp implements ProfileServices {
 	@Autowired
 	private ProfileRepository profileRepo;
 	@Autowired
+	private PetRepository petRepo;
+	@Autowired
 	private DTOServices dtoServ;
 	@Autowired
-	private PetRepository petRepo;
+	private PetServices petServ;
 
 	@Override
 	public ResponseEntity<?> newProfile(Integer id, ProfileRequestDTO data) {
@@ -109,11 +111,13 @@ public class ProfileServicesImp implements ProfileServices {
 		return new ResponseEntity<>(resp, HttpStatus.OK);
 	}
 
-	// TODO abandon pets
 	@Override
 	public ResponseEntity<?> deleteProfile(Integer id) {
 		if (!profileRepo.existsById(id))
 			return new ResponseEntity<>("Profile not found", HttpStatus.BAD_REQUEST);
+		List<PetEntity> pets = profileRepo.findById(id).orElse(null).getPets();
+		for (PetEntity i : pets)
+			petServ.removeOwner(i.getId());
 		profileRepo.deleteById(id);
 		return new ResponseEntity<>("Profile deleted", HttpStatus.OK);
 	}
